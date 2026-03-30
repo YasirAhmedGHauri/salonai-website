@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SalonAI - Live Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E91E63;
+            --primary-light: #F48FB1;
+            --primary-dark: #C2185B;
+            --accent: #FF6B9D;
+            --bg: #fafbfc;
+            --text: #1a1a2e;
+            --text-light: #666;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        
+        .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(255, 107, 157, 0.05));
+            border-radius: 50%;
+            top: -100px; right: -100px;
+            animation: float 15s ease-in-out infinite;
+        }
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 400px; height: 400px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.08), rgba(233, 30, 99, 0.03));
+            border-radius: 50%;
+            bottom: -50px; left: -50px;
+            animation: float 12s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 30px) scale(1.1); }
+        }
+
+        nav {
+            position: fixed;
+            top: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 100px;
+            padding: 12px 32px;
+            display: flex; align-items: center; gap: 40px;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(233, 30, 99, 0.1);
+        }
+        .logo { font-weight: 800; font-size: 20px; color: var(--primary); text-decoration: none; }
+        .logo span { background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 14px; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; padding: 10px 24px; border-radius: 100px;
+            text-decoration: none; font-weight: 600; font-size: 14px;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+        
+        .page-header { padding: 160px 40px 60px; text-align: center; }
+        .page-header h1 { font-size: 3rem; font-weight: 800; margin-bottom: 20px; }
+        .page-header h1 span { background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .page-header p { font-size: 1.25rem; color: var(--text-light); max-width: 600px; margin: 0 auto; }
+
+        /* Demo Card */
+        .demo-card { background: white; border-radius: 24px; padding: 40px; box-shadow: 0 16px 48px rgba(233, 30, 99, 0.1); margin: 40px auto; max-width: 900px; }
+        
+        .api-status { display: flex; align-items: center; gap: 12px; padding: 16px 24px; background: #f8f9ff; border-radius: 12px; margin-bottom: 24px; }
+        .status-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .status-dot.connected { background: #00ff00; box-shadow: 0 0 10px #00ff00; }
+        .status-dot.disconnected { background: #ff4444; }
+        .status-text { font-weight: 500; }
+
+        .data-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .data-item { background: #f8f9ff; padding: 20px; border-radius: 12px; text-align: center; }
+        .data-item label { font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+        .data-item .value { font-size: 1.25rem; font-weight: 700; color: var(--primary); margin-top: 4px; }
+
+        .services-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+        .services-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .service-item { background: #f8f9ff; padding: 16px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .service-name { font-weight: 600; }
+        .service-info { color: var(--text-light); font-size: 0.875rem; }
+        .service-price { color: var(--primary); font-weight: 700; font-size: 1.1rem; }
+
+        /* Chat Preview */
+        .chat-section { margin-top: 40px; padding-top: 40px; border-top: 1px solid #eee; }
+        .chat-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 20px; }
+        .chat-box { background: #f8f9ff; border-radius: 16px; padding: 24px; max-height: 300px; overflow-y: auto; }
+        .chat-message { margin-bottom: 16px; }
+        .chat-message.bot { text-align: left; }
+        .chat-message.user { text-align: right; }
+        .chat-bubble { display: inline-block; padding: 12px 16px; border-radius: 16px; max-width: 80%; font-size: 0.95rem; }
+        .chat-message.bot .chat-bubble { background: white; border: 1px solid #eee; }
+        .chat-message.user .chat-bubble { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; }
+
+        /* Buttons */
+        .btn {
+            display: inline-block; padding: 14px 28px; border-radius: 8px;
+            text-decoration: none; font-weight: 600; transition: all 0.3s; margin-top: 20px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-secondary { background: white; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-secondary:hover { background: var(--primary); color: white; }
+
+        footer { padding: 40px; text-align: center; color: var(--text-light); }
+        footer a { color: var(--primary); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .data-grid { grid-template-columns: repeat(2, 1fr); }
+            .services-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <nav>
+        <a href="index.html" class="logo">💇 Salon<span>AI</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="demo.html" class="nav-cta">Try Demo</a>
+            <a href="./contact.html" class="nav-cta">Get Started</a>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1><span>Live Demo</span> - See SalonAI in Action</h1>
+            <p>This is real data from our backend API. Watch the AI-powered salon management system work!</p>
+        </div>
+
+        <div class="demo-card">
+            <div class="api-status">
+                <div class="status-dot" id="statusDot"></div>
+                <span class="status-text" id="statusText">Connecting to API...</span>
+            </div>
+
+            <div class="data-grid" id="businessData" style="display:none;">
+                <div class="data-item">
+                    <label>Business</label>
+                    <div class="value" id="businessName">-</div>
+                </div>
+                <div class="data-item">
+                    <label>Location</label>
+                    <div class="value" id="businessLocation">-</div>
+                </div>
+                <div class="data-item">
+                    <label>Contact</label>
+                    <div class="value" id="businessPhone">-</div>
+                </div>
+                <div class="data-item">
+                    <label>Working Days</label>
+                    <div class="value">Mon-Sat</div>
+                </div>
+            </div>
+
+            <h3 class="services-title">📋 Services Available</h3>
+            <div class="services-list" id="servicesList">
+                <div class="service-item">
+                    <div><div class="service-name">Loading...</div></div>
+                    <div class="service-price">-</div>
+                </div>
+            </div>
+
+            <div class="chat-section">
+                <h3 class="chat-title">💬 AI Chat Preview</h3>
+                <div class="chat-box">
+                    <div class="chat-message bot">
+                        <div class="chat-bubble">👋 Hi! Welcome to Glow Salon. How can I help you today?</div>
+                    </div>
+                    <div class="chat-message user">
+                        <div class="chat-bubble">I want to book a haircut</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-bubble">Great! We have the following slots available today:<br><br>🕐 2:00 PM - 2:30 PM<br>🕐 3:00 PM - 3:30 PM<br>🕐 4:00 PM - 4:30 PM<br><br>Which time works for you?</div>
+                    </div>
+                </div>
+                <a href="./contact.html" class="btn btn-primary">Try Full AI Chat →</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 SalonAI — Built with ❤️ for salon owners | <a href="https://github.com/YasirAhmedGHauri/salonai-backend">Backend API</a></p>
+    </footer>
+
+    <script>
+        const API_BASE = 'http://148.230.120.61:8001';
+        
+        async function loadDemo() {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const businessData = document.getElementById('businessData');
+            const servicesList = document.getElementById('servicesList');
+            
+            try {
+                const res = await fetch(API_BASE + '/api/v1/businesses/glow-salon');
+                if (res.ok) {
+                    const business = await res.json();
+                    statusDot.className = 'status-dot connected';
+                    statusText.textContent = '✓ Connected to API - Real-time data';
+                    
+                    document.getElementById('businessName').textContent = business.name.split(' ')[0];
+                    document.getElementById('businessLocation').textContent = business.address ? business.address.split(',')[0] : 'Islamabad';
+                    document.getElementById('businessPhone').textContent = business.phone ? business.phone.split(' ')[0] : '+92 300';
+                    businessData.style.display = 'grid';
+                    
+                    // Load services
+                    const servicesRes = await fetch(API_BASE + '/api/v1/businesses/' + business.id + '/services');
+                    if (servicesRes.ok) {
+                        const services = await servicesRes.json();
+                        servicesList.innerHTML = services.slice(0, 6).map(s => 
+                            '<div class="service-item">' +
+                                '<div>' +
+                                    '<div class="service-name">' + s.name + '</div>' +
+                                    '<div class="service-info">' + s.duration_minutes + ' min • ' + s.category + '</div>' +
+                                '</div>' +
+                                '<div class="service-price">PKR ' + s.price.toLocaleString() + '</div>' +
+                            '</div>'
+                        ).join('');
+                    }
+                } else {
+                    throw new Error('API returned ' + res.status);
+                }
+            } catch (err) {
+                console.error('API Error:', err);
+                statusDot.className = 'status-dot disconnected';
+                statusText.textContent = '⚠ API offline - Showing demo data';
+                
+                // Show demo data
+                businessData.style.display = 'grid';
+                document.getElementById('businessName').textContent = 'Glow Salon';
+                document.getElementById('businessLocation').textContent = 'Islamabad';
+                document.getElementById('businessPhone').textContent = '+92 300';
+                
+                servicesList.innerHTML = 
+                    '<div class="service-item"><div><div class="service-name">Haircut & Style</div><div class="service-info">45 min • Hair</div></div><div class="service-price">PKR 1,500</div></div>' +
+                    '<div class="service-item"><div><div class="service-name">Hair Coloring</div><div class="service-info">90 min • Hair</div></div><div class="service-price">PKR 5,000</div></div>' +
+                    '<div class="service-item"><div><div class="service-name">Bridal Makeup</div><div class="service-info">120 min • Makeup</div></div><div class="service-price">PKR 15,000</div></div>' +
+                    '<div class="service-item"><div><div class="service-name">Facial Treatment</div><div class="service-info">60 min • Skin</div></div><div class="service-price">PKR 3,500</div></div>';
+            }
+        }
+        
+        loadDemo();
+    </script>
+</body>
+</html>
