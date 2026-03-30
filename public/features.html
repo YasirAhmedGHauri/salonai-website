@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - SalonAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #E91E63;
+            --primary-light: #F48FB1;
+            --primary-dark: #C2185B;
+            --accent: #FF6B9D;
+            --bg: #fafbfc;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --text: #1a1a2e;
+            --text-light: #666;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
+        }
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(255, 107, 157, 0.05));
+            border-radius: 50%;
+            top: -100px; right: -100px;
+            animation: float 15s ease-in-out infinite;
+        }
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 400px; height: 400px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.08), rgba(233, 30, 99, 0.03));
+            border-radius: 50%;
+            bottom: -50px; left: -50px;
+            animation: float 12s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 30px) scale(1.1); }
+        }
+        nav {
+            position: fixed;
+            top: 20px; left: 50%; transform: translateX(-50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            padding: 12px 32px;
+            display: flex; align-items: center; gap: 40px;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(233, 30, 99, 0.1);
+        }
+        .logo { font-weight: 800; font-size: 20px; color: var(--primary); text-decoration: none; }
+        .logo span { background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 14px; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; padding: 10px 24px; border-radius: 100px;
+            text-decoration: none; font-weight: 600; font-size: 14px;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+        }
+        .page-header {
+            padding: 160px 40px 80px;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 56px; font-weight: 800; margin-bottom: 16px;
+        }
+        .page-header h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .page-header p { font-size: 20px; color: var(--text-light); max-width: 600px; margin: 0 auto; }
+        .features-section {
+            padding: 40px 40px 100px;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .feature-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+            align-items: center; margin-bottom: 100px;
+        }
+        .feature-row.reverse { direction: rtl; }
+        .feature-row.reverse > * { direction: ltr; }
+        .feature-content h2 {
+            font-size: 36px; font-weight: 700; margin-bottom: 16px;
+        }
+        .feature-content p { font-size: 17px; color: var(--text-light); line-height: 1.7; margin-bottom: 24px; }
+        .feature-list { list-style: none; }
+        .feature-list li {
+            padding: 12px 0; display: flex; align-items: center; gap: 12px;
+            font-size: 15px;
+        }
+        .feature-list li::before {
+            content: '✓'; width: 24px; height: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 12px; font-weight: 700;
+        }
+        .feature-visual {
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(255, 107, 157, 0.05));
+            border-radius: 24px; padding: 48px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 80px; min-height: 300px;
+        }
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 32px;
+        }
+        footer {
+            background: #1a1a2e; color: white; padding: 60px 40px 30px;
+        }
+        .footer-content {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
+        }
+        .footer-brand h3 { font-size: 24px; font-weight: 700; margin-bottom: 16px; color: var(--primary-light); }
+        .footer-brand p { font-size: 14px; opacity: 0.7; line-height: 1.7; }
+        .footer-links h4 { font-size: 14px; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: white; text-decoration: none; font-size: 14px; opacity: 0.7; }
+        .footer-links a:hover { opacity: 1; }
+        .footer-bottom {
+            max-width: 1200px; margin: 0 auto;
+            padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center; font-size: 14px; opacity: 0.5;
+        }
+        @media (max-width: 768px) {
+            .feature-row, .feature-row.reverse { grid-template-columns: 1fr; direction: ltr; }
+            nav { padding: 10px 20px; gap: 16px; }
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 36px; }
+            .footer-content { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <nav>
+        <a href="index.html" class="logo">💇 Salon<span>AI</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="features.html" class="active">Features</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="nav-cta">Get Started</a>
+    </nav>
+    
+    <section class="page-header">
+        <h1>Powerful <span>Features</span></h1>
+        <p>Everything you need to automate your salon and delight your customers.</p>
+    </section>
+    
+    <section class="features-section">
+        <div class="feature-row">
+            <div class="feature-content">
+                <h2>🤖 AI Chat Assistant</h2>
+                <p>An intelligent chatbot that handles customer inquiries 24/7. It understands natural language, answers questions, books appointments, and never sleeps.</p>
+                <ul class="feature-list">
+                    <li>Natural language understanding</li>
+                    <li>Handles bookings automatically</li>
+                    <li>Multi-language support (English & Urdu)</li>
+                    <li>Instant responses, zero wait time</li>
+                    <li>Leads captured even at 3 AM</li>
+                </ul>
+            </div>
+            <div class="feature-visual">💬</div>
+        </div>
+        
+        <div class="feature-row reverse">
+            <div class="feature-content">
+                <h2>📅 Smart Scheduling</h2>
+                <p>Automated booking system that manages your calendar, prevents double-bookings, and optimizes staff schedules for maximum efficiency.</p>
+                <ul class="feature-list">
+                    <li>Real-time availability</li>
+                    <li>Multi-stylist support</li>
+                    <li>Buffer time management</li>
+                    <li>Recurring appointments</li>
+                    <li>Calendar sync (Google & Apple)</li>
+                </ul>
+            </div>
+            <div class="feature-visual">📅</div>
+        </div>
+        
+        <div class="feature-row">
+            <div class="feature-content">
+                <h2>💰 Payments & Billing</h2>
+                <p>Accept payments your way. Cash, card, JazzCash, EasyPaisa — everything tracked automatically in one place.</p>
+                <ul class="feature-list">
+                    <li>JazzCash & EasyPaisa integration</li>
+                    <li>Stripe for card payments</li>
+                    <li>Automatic receipt generation</li>
+                    <li>Deposit collection</li>
+                    <li>Revenue tracking & reporting</li>
+                </ul>
+            </div>
+            <div class="feature-visual">💰</div>
+        </div>
+        
+        <div class="feature-row reverse">
+            <div class="feature-content">
+                <h2>👥 Customer CRM</h2>
+                <p>Build lasting relationships with your clients. Track preferences, reward loyalty, and make every customer feel like a VIP.</p>
+                <ul class="feature-list">
+                    <li>Customer profiles & history</li>
+                    <li>Loyalty points system</li>
+                    <li>Birthday reminders</li>
+                    <li>Visit tracking</li>
+                    <li>Segmentation & tagging</li>
+                </ul>
+            </div>
+            <div class="feature-visual">👥</div>
+        </div>
+        
+        <div class="feature-row">
+            <div class="feature-content">
+                <h2>📊 Analytics Dashboard</h2>
+                <p>Get actionable insights into your business performance. Know what's working, what's not, and where to focus.</p>
+                <ul class="feature-list">
+                    <li>Revenue by service/staff</li>
+                    <li>Peak hours identification</li>
+                    <li>Customer retention metrics</li>
+                    <li>Staff performance tracking</li>
+                    <li>Growth trend analysis</li>
+                </ul>
+            </div>
+            <div class="feature-visual">📊</div>
+        </div>
+        
+        <div class="feature-row reverse">
+            <div class="feature-content">
+                <h2>💬 Multi-Channel Inbox</h2>
+                <p>Manage all customer conversations in one place. Website chat, WhatsApp, SMS — respond from a single dashboard.</p>
+                <ul class="feature-list">
+                    <li>Website chat widget</li>
+                    <li>WhatsApp Business integration</li>
+                    <li>SMS notifications</li>
+                    <li>Automated reminders</li>
+                    <li>Conversation history</li>
+                </ul>
+            </div>
+            <div class="feature-visual">💬</div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>💇 SalonAI</h3>
+                <p>The AI-powered salon management system that helps you automate bookings, engage customers, and grow your business.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="#">Integrations</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 SalonAI. All rights reserved.</div>
+    </footer>
+</body>
+</html>

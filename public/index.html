@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>SalonAI - AI-Powered Salon Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="logo">💇 SalonAI</div>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </header>
+    
+    <!-- Navigation Drawer -->
+    <nav class="nav-drawer" id="navDrawer">
+        <button class="close-btn" onclick="toggleMenu()">×</button>
+        <a href="index.html" onclick="toggleMenu()">Home</a>
+        <a href="./features" onclick="toggleMenu()">Features</a>
+        <a href="./pricing" onclick="toggleMenu()">Pricing</a>
+        <a href="./about" onclick="toggleMenu()">About</a>
+        <a href="./contact" onclick="toggleMenu()">Contact</a>
+        <a href="./demo.html" onclick="toggleMenu()">Try Demo</a>
+        <a href="./login.html" onclick="toggleMenu()">Login</a>
+    </nav>
+    <div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
+    
+    <!-- Desktop Header -->
+    <header class="desktop-header">
+        <div class="logo">💇 SalonAI</div>
+        <nav class="desktop-nav">
+            <a href="index.html" class="active">Home</a>
+            <a href="./features">Features</a>
+            <a href="./pricing">Pricing</a>
+            <a href="./about">About</a>
+            <a href="./contact">Contact</a>
+        </nav>
+        <div>
+            <a href="./demo.html" class="btn btn-secondary" style="margin-right:8px">Try Demo</a>
+            <a href="./login.html" class="btn btn-primary">Login</a>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Run Your Salon with <span class="gradient-text">AI Power</span></h1>
+                <p>Automate bookings, engage customers, and grow your business with our intelligent salon management platform.</p>
+                <div class="hero-buttons">
+                    <a href="./demo.html" class="btn btn-primary btn-lg">Try Free Demo</a>
+                    <a href="./features" class="btn btn-secondary btn-lg">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="chat-preview">
+                    <div class="chat-header">💇 SalonAI Assistant</div>
+                    <div class="chat-body">
+                        <div class="msg bot">Assalam! How can I help you today?</div>
+                        <div class="msg user">Book haircut for tomorrow</div>
+                        <div class="msg bot">What time works for you? 10 AM, 2 PM, or 5 PM?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Grid -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Everything You Need</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Chat Booking</h3>
+                    <p>Customers book appointments through natural conversation. 24/7 automated service.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Smart Notifications</h3>
+                    <p>WhatsApp & SMS reminders reduce no-shows by up to 40%.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Easy Payments</h3>
+                    <p>Accept payments online and in-salon. Split payments supported.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Track revenue, popular services, and customer trends.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Transform Your Salon?</h2>
+            <p>Join hundreds of salons already using SalonAI</p>
+            <a href="./demo.html" class="btn btn-white btn-lg">Start Free Trial</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 SalonAI. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        function toggleMenu() {
+            document.getElementById('navDrawer').classList.toggle('open');
+            document.getElementById('navOverlay').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
