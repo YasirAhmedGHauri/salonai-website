@@ -2,121 +2,161 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SalonAI - AI-Powered Salon Management</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 60px 0; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.25rem; color: #999; margin-bottom: 2rem; max-width: 600px; margin: 0 auto 2rem; }
+        .btn { padding: 16px 32px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-block; margin: 0 8px; transition: transform 0.2s; }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+        
+        /* Demo Section */
+        .demo-section { background: #111; padding: 80px 0; }
+        .demo-card { background: #1a1a1a; border-radius: 16px; padding: 40px; max-width: 600px; margin: 0 auto; text-align: left; }
+        .demo-card h2 { font-size: 1.5rem; margin-bottom: 20px; color: #667eea; }
+        .demo-card p { color: #999; margin-bottom: 20px; }
+        
+        /* API Status */
+        .api-status { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding: 16px; background: #222; border-radius: 8px; }
+        .status-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .status-dot.connected { background: #00ff00; box-shadow: 0 0 10px #00ff00; }
+        .status-dot.disconnected { background: #ff0000; }
+        
+        /* Data Display */
+        .data-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px; }
+        .data-item { background: #222; padding: 16px; border-radius: 8px; }
+        .data-item label { font-size: 0.75rem; color: #666; text-transform: uppercase; }
+        .data-item .value { font-size: 1.25rem; font-weight: 600; margin-top: 4px; }
+        
+        /* Services */
+        .services-list { margin-top: 20px; }
+        .service-item { background: #222; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .service-name { font-weight: 500; }
+        .service-price { color: #667eea; font-weight: 600; }
+        .service-duration { font-size: 0.875rem; color: #666; }
+        
+        /* Footer */
+        footer { padding: 40px 0; text-align: center; color: #666; }
+    </style>
 </head>
 <body>
-    <!-- Mobile Header -->
-    <header class="mobile-header">
-        <div class="logo">💇 SalonAI</div>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-    </header>
-    
-    <!-- Navigation Drawer -->
-    <nav class="nav-drawer" id="navDrawer">
-        <button class="close-btn" onclick="toggleMenu()">×</button>
-        <a href="index.html" onclick="toggleMenu()">Home</a>
-        <a href="./features" onclick="toggleMenu()">Features</a>
-        <a href="./pricing" onclick="toggleMenu()">Pricing</a>
-        <a href="./about" onclick="toggleMenu()">About</a>
-        <a href="./contact" onclick="toggleMenu()">Contact</a>
-        <a href="./demo.html" onclick="toggleMenu()">Try Demo</a>
-        <a href="./login.html" onclick="toggleMenu()">Login</a>
-    </nav>
-    <div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
-    
-    <!-- Desktop Header -->
-    <header class="desktop-header">
-        <div class="logo">💇 SalonAI</div>
-        <nav class="desktop-nav">
-            <a href="index.html" class="active">Home</a>
-            <a href="./features">Features</a>
-            <a href="./pricing">Pricing</a>
-            <a href="./about">About</a>
-            <a href="./contact">Contact</a>
-        </nav>
-        <div>
-            <a href="./demo.html" class="btn btn-secondary" style="margin-right:8px">Try Demo</a>
-            <a href="./login.html" class="btn btn-primary">Login</a>
-        </div>
-    </header>
-    
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <h1>Run Your Salon with <span class="gradient-text">AI Power</span></h1>
-                <p>Automate bookings, engage customers, and grow your business with our intelligent salon management platform.</p>
-                <div class="hero-buttons">
-                    <a href="./demo.html" class="btn btn-primary btn-lg">Try Free Demo</a>
-                    <a href="./features" class="btn btn-secondary btn-lg">Learn More</a>
-                </div>
+            <h1>Run Your Salon with <span class="gradient-text">AI Power</span></h1>
+            <p>The complete AI-powered salon management system. Automate bookings, manage customers, and grow your business — all in one platform.</p>
+            <div>
+                <a href="./demo.html" class="btn btn-primary">Try Demo</a>
+                <a href="./contact.html" class="btn btn-secondary">Contact Sales</a>
             </div>
-            <div class="hero-visual">
-                <div class="chat-preview">
-                    <div class="chat-header">💇 SalonAI Assistant</div>
-                    <div class="chat-body">
-                        <div class="msg bot">Assalam! How can I help you today?</div>
-                        <div class="msg user">Book haircut for tomorrow</div>
-                        <div class="msg bot">What time works for you? 10 AM, 2 PM, or 5 PM?</div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo-section">
+        <div class="container">
+            <div class="demo-card">
+                <h2>🎥 Live Demo</h2>
+                <p>See SalonAI in action! This is real data from our API.</p>
+                
+                <div class="api-status">
+                    <div class="status-dot" id="apiDot"></div>
+                    <span id="apiStatus">Checking API...</span>
+                </div>
+                
+                <div id="businessInfo" style="display:none;">
+                    <div class="data-grid">
+                        <div class="data-item">
+                            <label>Business Name</label>
+                            <div class="value" id="businessName">-</div>
+                        </div>
+                        <div class="data-item">
+                            <label>Location</label>
+                            <div class="value" id="businessLocation">-</div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin-top: 24px; font-size: 1rem; color: #999;">Our Services</h3>
+                    <div class="services-list" id="servicesList">
+                        <div class="service-item">
+                            <span class="service-name">Loading...</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Features Grid -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Everything You Need</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3>AI Chat Booking</h3>
-                    <p>Customers book appointments through natural conversation. 24/7 automated service.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Smart Notifications</h3>
-                    <p>WhatsApp & SMS reminders reduce no-shows by up to 40%.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Easy Payments</h3>
-                    <p>Accept payments online and in-salon. Split payments supported.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Analytics Dashboard</h3>
-                    <p>Track revenue, popular services, and customer trends.</p>
+                
+                <div style="margin-top: 24px; text-align: center;">
+                    <a href="./features.html" class="btn btn-secondary">View All Features</a>
+                    <a href="./pricing.html" class="btn btn-primary">See Pricing</a>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Ready to Transform Your Salon?</h2>
-            <p>Join hundreds of salons already using SalonAI</p>
-            <a href="./demo.html" class="btn btn-white btn-lg">Start Free Trial</a>
-        </div>
-    </section>
-    
+
     <!-- Footer -->
-    <footer class="footer">
+    <footer>
         <div class="container">
-            <p>&copy; 2024 SalonAI. All rights reserved.</p>
+            <p>© 2024 SalonAI — Built with ❤️ for salon owners</p>
+            <p style="margin-top: 8px; font-size: 0.875rem;">Backend API: http://148.230.120.61:8001</p>
         </div>
     </footer>
-    
+
     <script>
-        function toggleMenu() {
-            document.getElementById('navDrawer').classList.toggle('open');
-            document.getElementById('navOverlay').classList.toggle('open');
+        // API Configuration
+        const API_BASE = 'http://148.230.120.61:8001';
+        
+        async function loadDemo() {
+            const apiDot = document.getElementById('apiDot');
+            const apiStatus = document.getElementById('apiStatus');
+            const businessInfo = document.getElementById('businessInfo');
+            
+            try {
+                // Check health
+                const healthRes = await fetch(API_BASE + '/health');
+                if (healthRes.ok) {
+                    apiDot.className = 'status-dot connected';
+                    apiStatus.textContent = 'Connected to API ✓';
+                    
+                    // Load business data
+                    const businessRes = await fetch(API_BASE + '/api/v1/businesses/glow-salon');
+                    const business = await businessRes.json();
+                    
+                    document.getElementById('businessName').textContent = business.name;
+                    document.getElementById('businessLocation').textContent = business.address || 'Islamabad';
+                    businessInfo.style.display = 'block';
+                    
+                    // Load services
+                    const servicesRes = await fetch(API_BASE + '/api/v1/businesses/' + business.id + '/services');
+                    const services = await servicesRes.json();
+                    
+                    const servicesList = document.getElementById('servicesList');
+                    servicesList.innerHTML = services.slice(0, 6).map(s => 
+                        '<div class="service-item">' +
+                            '<div>' +
+                                '<div class="service-name">' + s.name + '</div>' +
+                                '<div class="service-duration">' + s.duration_minutes + ' min • ' + s.category + '</div>' +
+                            '</div>' +
+                            '<div class="service-price">PKR ' + s.price.toLocaleString() + '</div>' +
+                        '</div>'
+                    ).join('');
+                }
+            } catch (err) {
+                apiDot.className = 'status-dot disconnected';
+                apiStatus.textContent = 'API Offline (VPS may not be accessible from browser)';
+                console.error(err);
+            }
         }
+        
+        loadDemo();
     </script>
 </body>
 </html>
